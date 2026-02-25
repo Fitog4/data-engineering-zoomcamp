@@ -4,6 +4,7 @@ import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.streams.StreamsConfig;
 import org.example.data.Ride;
 
 import java.time.Duration;
@@ -17,7 +18,7 @@ public class JsonConsumer {
     private Properties props = new Properties();
     private KafkaConsumer<String, Ride> consumer;
     public JsonConsumer() {
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "pkc-75m1o.europe-west3.gcp.confluent.cloud:9092");
+        props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "pkc-l6wr6.europe-west2.gcp.confluent.cloud:9092");
         props.put("security.protocol", "SASL_SSL");
         props.put("sasl.jaas.config", "org.apache.kafka.common.security.plain.PlainLoginModule required username='"+Secrets.KAFKA_CLUSTER_KEY+"' password='"+Secrets.KAFKA_CLUSTER_SECRET+"';");
         props.put("sasl.mechanism", "PLAIN");

@@ -43,14 +43,14 @@ class JsonKStreamJoinsTest {
     @Test
     public void testIfJoinWorksOnSameDropOffPickupLocationId() {
         Ride ride = DataGeneratorHelper.generateRide();
-        PickupLocation pickupLocation = DataGeneratorHelper.generatePickUpLocation(ride.DOLocationID);
+        PickupLocation pickupLocation = DataGeneratorHelper.generatePickUpLocation(ride.PULocationID);
         ridesTopic.pipeInput(String.valueOf(ride.DOLocationID), ride);
         pickLocationTopic.pipeInput(String.valueOf(pickupLocation.PULocationID), pickupLocation);
 
-        assertEquals(outputTopic.getQueueSize(), 1);
+        assertEquals(1, outputTopic.getQueueSize());
         var expected = new VendorInfo(ride.VendorID, pickupLocation.PULocationID, pickupLocation.tpep_pickup_datetime, ride.tpep_dropoff_datetime);
         var result = outputTopic.readKeyValue();
-        assertEquals(result.key, String.valueOf(ride.DOLocationID));
+        assertEquals(result.key, String.valueOf(ride.PULocationID));
         assertEquals(result.value.VendorID, expected.VendorID);
         assertEquals(result.value.pickupTime, expected.pickupTime);
     }

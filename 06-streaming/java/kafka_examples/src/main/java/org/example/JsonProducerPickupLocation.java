@@ -4,6 +4,7 @@ import com.opencsv.exceptions.CsvException;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.streams.StreamsConfig;
 import org.example.data.PickupLocation;
 
 import java.io.IOException;
@@ -15,7 +16,7 @@ public class JsonProducerPickupLocation {
     private Properties props = new Properties();
 
     public JsonProducerPickupLocation() {
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "pkc-75m1o.europe-west3.gcp.confluent.cloud:9092");
+        props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "pkc-l6wr6.europe-west2.gcp.confluent.cloud:9092");
         props.put("security.protocol", "SASL_SSL");
         props.put("sasl.jaas.config", "org.apache.kafka.common.security.plain.PlainLoginModule required username='"+Secrets.KAFKA_CLUSTER_KEY+"' password='"+Secrets.KAFKA_CLUSTER_SECRET+"';");
         props.put("sasl.mechanism", "PLAIN");
@@ -28,7 +29,7 @@ public class JsonProducerPickupLocation {
 
     public void publish(PickupLocation pickupLocation) throws ExecutionException, InterruptedException {
         KafkaProducer<String, PickupLocation> kafkaProducer = new KafkaProducer<String, PickupLocation>(props);
-        var record = kafkaProducer.send(new ProducerRecord<>("rides_location", String.valueOf(pickupLocation.PULocationID), pickupLocation), (metadata, exception) -> {
+        var record = kafkaProducer.send(new ProducerRecord<>(Topics.INPUT_RIDE_LOCATION_TOPIC, String.valueOf(pickupLocation.PULocationID), pickupLocation), (metadata, exception) -> {
             if (exception != null) {
                 System.out.println(exception.getMessage());
             }
@@ -39,6 +40,6 @@ public class JsonProducerPickupLocation {
 
     public static void main(String[] args) throws IOException, CsvException, ExecutionException, InterruptedException {
         var producer = new JsonProducerPickupLocation();
-        producer.publish(new PickupLocation(186, LocalDateTime.now()));
+        producer.publish(new PickupLocation(263, LocalDateTime.now()));
     }
 }

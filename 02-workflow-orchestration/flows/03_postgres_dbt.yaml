@@ -10,6 +10,7 @@ inputs:
       - dbt debug # use when running the first time to validate DB connection
 tasks:
   - id: sync
+  # molti piu dettagli su i plugins per git si trova qui e nei video linkati https://www.youtube.com/watch?v=iM4mjIEsxMY
     type: io.kestra.plugin.git.SyncNamespaceFiles
     url: https://github.com/DataTalksClub/data-engineering-zoomcamp
     branch: main

@@ -14,3 +14,10 @@
 serving_dir
 .ipynb_checkpoints/
 !week_6_stream_processing/avro_example/data/rides.csv
+06-streaming/java/kafka_examples/src/main/java/org/example/Secrets.java
+05-batch/code/data/*
+05-batch/code/fhvhv/*
+05-batch/code/lib/*
+05-batch/code/taxi_zone_lookup.csv*
+05-batch/code/tmp/*
+05-batch/code/zones/*
